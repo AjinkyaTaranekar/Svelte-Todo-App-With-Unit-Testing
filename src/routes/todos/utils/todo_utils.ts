@@ -8,3 +8,9 @@ export function isValidTodo(todo: string): boolean {
   const todoRegex = /^[a-zA-Z0-9 ]*$/;
   return todoRegex.test(todo);
 }
+
+export function cleanTodo(todo: string): string {
+  todo = todo.trim();
+  todo = todo.replace(/\s+/g, " ");
+  return todo;
+}
