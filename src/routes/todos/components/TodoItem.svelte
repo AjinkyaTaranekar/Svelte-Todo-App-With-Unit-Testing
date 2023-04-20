@@ -14,15 +14,14 @@
     data-testid="checkbox-{index}"
   />
   <span
-    class:checked={item.status}
     class:line-through={item.status}
     class:italic={item.status}
     class:font-semibold={item.status}
     data-testid="todo-item-{index}"
-    class="todo-md"
+    class="text-md"
   >
-    {item.todo}</span
-  >
+    {item.todo}
+  </span>
   <button
     on:click={() => removeFromList(index)}
     data-testid="delete-button-{index}">❌</button

@@ -48,7 +48,10 @@ it("shouldn't add todo if it is invalid", async () => {
 
   await userEvent.type(input, "Buy-groceries{enter}");
 
-  expect(getByText("Please enter a valid todo")).toBeInTheDocument();
+  const errorMessage = getByText("Please enter a valid todo");
+  expect(errorMessage).toBeInTheDocument();
+  expect(errorMessage).toHaveClass("text-red-500 text-md");
+
   const todoItems = getAllByTestId(/todo-item-.*/);
   expect(todoItems.length).toBe(3); // Original 3
 });
@@ -69,7 +72,7 @@ it("should mark todo as done when checked", async () => {
 
   const checkbox = getByTestId("checkbox-2");
 
-  await fireEvent.click(checkbox); // check the thrid item
+  await fireEvent.click(checkbox); // check the third item
 
   const todoItem = getByTestId("todo-item-2");
   expect(todoItem).toHaveClass("line-through italic font-semibold");
