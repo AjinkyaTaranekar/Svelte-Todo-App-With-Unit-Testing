@@ -32,8 +32,8 @@
   }
 </script>
 
-<div class="flex flex-col p-4">
-  <div class="flex flex-row justify-between items-center w-96">
+<div class="flex flex-col p-4 w-full">
+  <div class="flex flex-row justify-between items-center">
     <input
       bind:value={todo}
       type="todo"
@@ -43,7 +43,7 @@
         }
       }}
       placeholder="What needs to be done?"
-      class="border-2 rounded-lg border-blue-500 h-14 placeholder:todo-lg p-2"
+      class="border-2 rounded-lg border-blue-500 h-12 placeholder:todo-lg p-2 w-full"
     />
     <button
       on:click={addToList}

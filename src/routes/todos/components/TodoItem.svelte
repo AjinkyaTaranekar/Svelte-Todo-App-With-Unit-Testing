@@ -5,7 +5,7 @@
 </script>
 
 <div
-  class="flex flex-row justify-between items-center w-96 my-2 border bg-gray-200 p-4"
+  class="flex flex-row justify-between items-center w-full my-2 border bg-gray-200 p-4"
 >
   <input
     bind:checked={item.status}
