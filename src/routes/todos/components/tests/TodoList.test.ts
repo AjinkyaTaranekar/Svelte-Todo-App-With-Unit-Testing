@@ -11,19 +11,33 @@ it("should add todo to the list when add button is clicked", async () => {
   await userEvent.type(input, "Buy groceries");
   await fireEvent.click(addButton);
 
+  expect(getByText("Buy groceries")).toBeInTheDocument();
   const todoItems = getAllByTestId(/todo-item-.*/);
   expect(todoItems.length).toBe(4); // Original 3 + new item
 });
 
 it("should add todo to the list when enter key is pressed", async () => {
-  const { getByPlaceholderText, getAllByTestId } = render(TodoList);
+  const { getByPlaceholderText, getByText, getAllByTestId } = render(TodoList);
 
   const input = getByPlaceholderText("What needs to be done?");
 
   await userEvent.type(input, "Buy groceries{enter}");
 
+  expect(getByText("Buy groceries")).toBeInTheDocument();
   const todoItems = getAllByTestId(/todo-item-.*/);
   expect(todoItems.length).toBe(4); // Original 3 + new item
+});
+
+it("shouldn't add todo if it is invalid", async () => {
+  const { getByPlaceholderText, getByText, getAllByTestId } = render(TodoList);
+
+  const input = getByPlaceholderText("What needs to be done?");
+
+  await userEvent.type(input, "Buy-groceries{enter}");
+
+  expect(getByText("Please enter a valid todo")).toBeInTheDocument();
+  const todoItems = getAllByTestId(/todo-item-.*/);
+  expect(todoItems.length).toBe(3); // Original 3 
 });
 
 it("should remove todo from the list when remove button is clicked", async () => {
@@ -46,18 +60,6 @@ it("should remove all todos from the list when remove button is clicked and ther
 
   const todoItems = queryByTestId(/todo-item-.*/);
   expect(todoItems).not.toBeTruthy(); // All todos should be removed
-});
-
-it("should add todo to the list when enter button is clicked on keyboard", async () => {
-  const { getByPlaceholderText, getAllByTestId } = render(TodoList);
-
-  const input = getByPlaceholderText("What needs to be done?");
-
-  await userEvent.type(input, "Buy groceries");
-  await userEvent.type(input, "{enter}");
-
-  const todoItems = getAllByTestId(/todo-item-.*/);
-  expect(todoItems.length).toBe(1); // new item
 });
 
 it("should disable the remove button when there are no todos", async () => {

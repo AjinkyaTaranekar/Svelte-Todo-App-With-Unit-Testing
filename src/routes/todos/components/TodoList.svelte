@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { cleanTodo, isValidTodo } from "../utils/todo_utils";
   import TodoItem from "./TodoItem.svelte";
 
   let todo = "";
+  let errorMessage: string | null = null;
 
   let todoList = [
     { todo: "Creating project", status: true },
@@ -10,8 +12,14 @@
   ];
 
   function addToList() {
+    todo = cleanTodo(todo);
+    if (!isValidTodo(todo)) {
+      errorMessage = "Please enter a valid todo";
+      return;
+    }
     todoList = [...todoList, { todo: todo, status: false }];
     todo = "";
+    errorMessage = null;
   }
 
   function removeFromList(index: number) {
@@ -55,8 +63,11 @@
       Remove
     </button>
   </div>
+  {#if errorMessage}
+    <div class="text-red-500 text-md">{errorMessage}</div>
+  {/if}
   <div class="mt-6 mb-3">
-    <h1 class="todo-2xl font-bold">Todo List</h1>
+    <h1 class="text-2xl font-bold">Todo List</h1>
   </div>
   <div class="overflow-y-scroll my-4">
     {#each todoList as item, index}
