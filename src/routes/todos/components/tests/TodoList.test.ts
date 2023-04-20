@@ -102,7 +102,7 @@ it("should mark todo as done when checked", async () => {
 it("should remove all todos from the list when remove button is clicked and there are no todos", async () => {
   const { getByText, queryByTestId } = render(TodoList);
 
-  const removeAllButton = getByText("Remove");
+  const removeAllButton = getByText("Remove All");
 
   await fireEvent.click(removeAllButton);
 
@@ -113,7 +113,7 @@ it("should remove all todos from the list when remove button is clicked and ther
 it("should disable the remove button when there are no todos", async () => {
   const { getByText } = render(TodoList);
 
-  const removeAllButton = getByText("Remove");
+  const removeAllButton = getByText("Remove All");
   await fireEvent.click(removeAllButton);
 
   expect(removeAllButton).toHaveClass(
@@ -125,7 +125,7 @@ it("should disable the remove button when there are no todos", async () => {
 it("should show no todo text when there are no todos", async () => {
   const { getByText } = render(TodoList);
 
-  const removeAllButton = getByText("Remove");
+  const removeAllButton = getByText("Remove All");
   await fireEvent.click(removeAllButton);
 
   expect(getByText("No todos to show!! Add now 👆")).toBeInTheDocument();
