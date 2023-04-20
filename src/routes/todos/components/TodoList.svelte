@@ -32,6 +32,9 @@
   }
 </script>
 
+<div class="bg-blue-600 w-full shadow-lg h-16">
+  <h1 class="text-3xl font-bold text-center p-4 text-white">Todo App</h1>
+</div>
 <div class="flex flex-col p-4 w-full">
   <div class="flex flex-row justify-between items-center">
     <input

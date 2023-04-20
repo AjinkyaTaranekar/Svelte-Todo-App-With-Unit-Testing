@@ -2,6 +2,14 @@ import { fireEvent, render } from "@testing-library/svelte";
 import userEvent from "@testing-library/user-event";
 import TodoList from "../TodoList.svelte";
 
+it("check if appbar has title in center", () => {
+  const { getByText } = render(TodoList);
+
+  const title = getByText("Todo App");
+  expect(title).toBeInTheDocument();
+  expect(title).toHaveClass("text-center");
+});
+
 it("should add todo to the list when add button is clicked", async () => {
   const { getByPlaceholderText, getByText, getAllByTestId } = render(TodoList);
 
