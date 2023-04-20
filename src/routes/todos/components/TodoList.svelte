@@ -66,12 +66,18 @@
   {#if errorMessage}
     <div class="text-red-500 text-md">{errorMessage}</div>
   {/if}
-  <div class="mt-6 mb-3">
-    <h1 class="text-2xl font-bold">Todo List</h1>
-  </div>
-  <div class="overflow-y-scroll my-4">
-    {#each todoList as item, index}
-      <TodoItem {item} {index} {removeFromList} />
-    {/each}
-  </div>
+  {#if !todoList.length}
+    <div class="text-gray-500 text-md text-center m-8">
+      No todos to show!! Add now 👆
+    </div>
+  {:else}
+    <div class="mt-6 mb-3">
+      <h1 class="text-2xl font-bold">Todo List</h1>
+    </div>
+    <div class="overflow-y-scroll my-4">
+      {#each todoList as item, index}
+        <TodoItem {item} {index} {removeFromList} />
+      {/each}
+    </div>
+  {/if}
 </div>
