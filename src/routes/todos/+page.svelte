@@ -1,5 +1,5 @@
 <script>
-  import TodoList from "./components/TodoList.svelte";
+  import TaskReviewPage from "./components/TaskReviewPage.svelte";
 </script>
 
-<TodoList />
+<TaskReviewPage />

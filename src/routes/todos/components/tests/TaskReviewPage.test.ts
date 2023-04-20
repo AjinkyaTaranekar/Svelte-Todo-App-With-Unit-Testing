@@ -1,9 +1,9 @@
 import { fireEvent, render } from "@testing-library/svelte";
 import userEvent from "@testing-library/user-event";
-import TodoList from "../TodoList.svelte";
+import TaskReviewPage from "../TaskReviewPage.svelte";
 
 it("check if appbar has title in center", () => {
-  const { getByText } = render(TodoList);
+  const { getByText } = render(TaskReviewPage);
 
   const title = getByText("Todo App");
   expect(title).toBeInTheDocument();
@@ -11,7 +11,7 @@ it("check if appbar has title in center", () => {
 });
 
 it("check if input, add and remove button are present", () => {
-  const { getByText, getByPlaceholderText } = render(TodoList);
+  const { getByText, getByPlaceholderText } = render(TaskReviewPage);
 
   const input = getByPlaceholderText("What needs to be done?");
   const addButton = getByText("Add");
@@ -23,7 +23,8 @@ it("check if input, add and remove button are present", () => {
 });
 
 it("should add todo to the list when add button is clicked", async () => {
-  const { getByPlaceholderText, getByText, getAllByTestId } = render(TodoList);
+  const { getByPlaceholderText, getByText, getAllByTestId } =
+    render(TaskReviewPage);
 
   const input = getByPlaceholderText("What needs to be done?");
   const addButton = getByText("Add");
@@ -37,7 +38,8 @@ it("should add todo to the list when add button is clicked", async () => {
 });
 
 it("should add todo to the list when enter key is pressed", async () => {
-  const { getByPlaceholderText, getByText, getAllByTestId } = render(TodoList);
+  const { getByPlaceholderText, getByText, getAllByTestId } =
+    render(TaskReviewPage);
 
   const input = getByPlaceholderText("What needs to be done?");
 
@@ -49,7 +51,7 @@ it("should add todo to the list when enter key is pressed", async () => {
 });
 
 it("should add todo to the list at the bottom", async () => {
-  const { getByPlaceholderText, getByText } = render(TodoList);
+  const { getByPlaceholderText, getByText } = render(TaskReviewPage);
 
   const input = getByPlaceholderText("What needs to be done?");
 
@@ -62,7 +64,8 @@ it("should add todo to the list at the bottom", async () => {
 });
 
 it("shouldn't add todo if it is invalid", async () => {
-  const { getByPlaceholderText, getByText, getAllByTestId } = render(TodoList);
+  const { getByPlaceholderText, getByText, getAllByTestId } =
+    render(TaskReviewPage);
 
   const input = getByPlaceholderText("What needs to be done?");
 
@@ -77,7 +80,7 @@ it("shouldn't add todo if it is invalid", async () => {
 });
 
 it("should remove todo from the list when remove button is clicked", async () => {
-  const { getAllByRole, getAllByTestId } = render(TodoList);
+  const { getAllByRole, getAllByTestId } = render(TaskReviewPage);
 
   const removeButtons = getAllByRole("button", { name: "❌" });
 
@@ -88,7 +91,7 @@ it("should remove todo from the list when remove button is clicked", async () =>
 });
 
 it("should mark todo as done when checked", async () => {
-  const { getByTestId } = render(TodoList);
+  const { getByTestId } = render(TaskReviewPage);
 
   const checkbox = getByTestId("checkbox-2");
 
@@ -100,7 +103,7 @@ it("should mark todo as done when checked", async () => {
 });
 
 it("should remove all todos from the list when remove button is clicked and there are no todos", async () => {
-  const { getByText, queryByTestId } = render(TodoList);
+  const { getByText, queryByTestId } = render(TaskReviewPage);
 
   const removeAllButton = getByText("Remove All");
 
@@ -111,7 +114,7 @@ it("should remove all todos from the list when remove button is clicked and ther
 });
 
 it("should disable the remove button when there are no todos", async () => {
-  const { getByText } = render(TodoList);
+  const { getByText } = render(TaskReviewPage);
 
   const removeAllButton = getByText("Remove All");
   await fireEvent.click(removeAllButton);
@@ -123,7 +126,7 @@ it("should disable the remove button when there are no todos", async () => {
 });
 
 it("should show no todo text when there are no todos", async () => {
-  const { getByText } = render(TodoList);
+  const { getByText } = render(TaskReviewPage);
 
   const removeAllButton = getByText("Remove All");
   await fireEvent.click(removeAllButton);

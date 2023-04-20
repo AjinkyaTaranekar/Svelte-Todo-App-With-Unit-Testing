@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cleanTodo, isValidTodo } from "../utils/todo_utils";
-  import TodoItem from "./TodoItem.svelte";
+  import Item from "./Item.svelte";
 
   let todo = "";
   let errorMessage: string | null = null;
@@ -79,7 +79,7 @@
     </div>
     <div class="overflow-y-scroll my-4">
       {#each todoList as item, index}
-        <TodoItem {item} {index} {removeFromList} />
+        <Item {item} {index} {removeFromList} />
       {/each}
     </div>
   {/if}
