@@ -56,14 +56,14 @@
     </button>
     <button
       on:click={removeAll}
-      class=" rounded-lg h-8 text-white w-20 mx-2"
+      class=" rounded-lg h-8 text-white w-28"
       class:cursor-not-allowed={!todoList.length}
       class:pointers-events-none={!todoList.length}
       class:bg-red-300={!todoList.length}
       class:bg-red-500={todoList.length}
       disabled={!todoList.length}
     >
-      Remove
+      Remove All
     </button>
   </div>
   {#if errorMessage}

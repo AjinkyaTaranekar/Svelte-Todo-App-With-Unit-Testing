@@ -10,6 +10,18 @@ it("check if appbar has title in center", () => {
   expect(title).toHaveClass("text-center");
 });
 
+it("check if input, add and remove button are present", () => {
+  const { getByText, getByPlaceholderText } = render(TodoList);
+
+  const input = getByPlaceholderText("What needs to be done?");
+  const addButton = getByText("Add");
+  const removeButton = getByText("Remove All");
+
+  expect(input).toBeInTheDocument();
+  expect(addButton).toBeInTheDocument();
+  expect(removeButton).toBeInTheDocument();
+});
+
 it("should add todo to the list when add button is clicked", async () => {
   const { getByPlaceholderText, getByText, getAllByTestId } = render(TodoList);
 
