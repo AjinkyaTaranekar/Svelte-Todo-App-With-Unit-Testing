@@ -34,7 +34,7 @@ it("should add todo to the list when add button is clicked", async () => {
 
   expect(getByText("Buy groceries")).toBeInTheDocument();
   const todoItems = getAllByTestId(/todo-item-.*/);
-  expect(todoItems.length).toBe(4); // Original 3 + new item
+  expect(todoItems.length).toBe(2); // Original 1 todo + new item
 });
 
 it("should add todo to the list when enter key is pressed", async () => {
@@ -47,7 +47,7 @@ it("should add todo to the list when enter key is pressed", async () => {
 
   expect(getByText("Buy groceries")).toBeInTheDocument();
   const todoItems = getAllByTestId(/todo-item-.*/);
-  expect(todoItems.length).toBe(4); // Original 3 + new item
+  expect(todoItems.length).toBe(2); // Original 1 + new item
 });
 
 it("should add todo to the list at the bottom", async () => {
@@ -76,29 +76,29 @@ it("shouldn't add todo if it is invalid", async () => {
   expect(errorMessage).toHaveClass("text-red-500 text-md");
 
   const todoItems = getAllByTestId(/todo-item-.*/);
-  expect(todoItems.length).toBe(3); // Original 3
+  expect(todoItems.length).toBe(1); // Original 1
 });
 
 it("should remove todo from the list when remove button is clicked", async () => {
-  const { getAllByRole, getAllByTestId } = render(TaskReviewPage);
+  const { getByTestId, queryAllByTestId } = render(TaskReviewPage);
 
-  const removeButtons = getAllByRole("button", { name: "❌" });
+  const removeButton = getByTestId("todo-delete-button-2");
 
-  await fireEvent.click(removeButtons[1]); // Remove the second item
-
-  const todoItems = getAllByTestId(/todo-item-.*/);
-  expect(todoItems.length).toBe(2); // Original 3 - 1 removed
+  await fireEvent.click(removeButton); // Remove the first item
+  
+  const todoItems = queryAllByTestId(/todo-item-.*/);
+  expect(todoItems.length).toBe(0); // Original 1 - 1 removed
 });
 
-it("should mark todo as done when checked", async () => {
+it("should mark todo as done when checked, and move to Done list", async () => {
   const { getByTestId } = render(TaskReviewPage);
 
-  const checkbox = getByTestId("checkbox-2");
+  const checkbox = getByTestId("todo-checkbox-2");
 
   await fireEvent.click(checkbox); // check the third item
 
-  const todoItem = getByTestId("todo-item-2");
-  expect(todoItem).toHaveClass("line-through italic font-semibold");
+  const todoItem = getByTestId("done-item-2");
+  expect(todoItem).toHaveClass("italic font-semibold");
   expect(checkbox).toBeChecked();
 });
 

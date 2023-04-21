@@ -5,10 +5,10 @@
   let todo = "";
   let errorMessage: string | null = null;
 
-  let todoList = [
-    { todo: "Creating project", status: true },
-    { todo: "Add Tailwind", status: true },
-    { todo: "Initialise base project", status: false },
+  let tasksList = [
+    { todo: "Creating project", status: true, todoId: 0 },
+    { todo: "Add Tailwind", status: true, todoId: 1 },
+    { todo: "Initialise base project", status: false, todoId: 2 },
   ];
 
   function addToList() {
@@ -17,19 +17,29 @@
       errorMessage = "Please enter a valid todo";
       return;
     }
-    todoList = [...todoList, { todo: todo, status: false }];
+    tasksList = [
+      ...tasksList,
+      { todo: todo, status: false, todoId: tasksList.length },
+    ];
     todo = "";
     errorMessage = null;
   }
 
   function removeFromList(index: number) {
-    todoList.splice(index, 1);
-    todoList = todoList;
+    tasksList.splice(index, 1);
+    tasksList = tasksList;
   }
 
   function removeAll() {
-    todoList = [];
+    tasksList = [];
   }
+
+  function onChange() {
+    tasksList = tasksList;
+  }
+
+  $: todos = tasksList.filter((todo) => todo.status === false);
+  $: done = tasksList.filter((todo) => todo.status === true);
 </script>
 
 <div class="bg-blue-600 w-full shadow-lg h-16">
@@ -57,11 +67,11 @@
     <button
       on:click={removeAll}
       class=" rounded-lg h-8 text-white w-28"
-      class:cursor-not-allowed={!todoList.length}
-      class:pointers-events-none={!todoList.length}
-      class:bg-red-300={!todoList.length}
-      class:bg-red-500={todoList.length}
-      disabled={!todoList.length}
+      class:cursor-not-allowed={!tasksList.length}
+      class:pointers-events-none={!tasksList.length}
+      class:bg-red-300={!tasksList.length}
+      class:bg-red-500={tasksList.length}
+      disabled={!tasksList.length}
     >
       Remove All
     </button>
@@ -69,18 +79,32 @@
   {#if errorMessage}
     <div class="text-red-500 text-md">{errorMessage}</div>
   {/if}
-  {#if !todoList.length}
+  {#if !tasksList.length}
     <div class="text-gray-500 text-md text-center m-8">
       No todos to show!! Add now 👆
     </div>
   {:else}
-    <div class="mt-6 mb-3">
-      <h1 class="text-2xl font-bold">Todo List</h1>
-    </div>
-    <div class="overflow-y-scroll my-4">
-      {#each todoList as item, index}
-        <Item {item} {index} {removeFromList} />
-      {/each}
+    <div class="flex flex-row mt-6 justify-between">
+      <div class="flex flex-col w-full mx-2">
+        <div class="mb-3">
+          <h1 class="text-2xl font-bold">Todo List</h1>
+        </div>
+        <div class="overflow-y-scroll my-4">
+          {#each todos as item, index}
+            <Item {item} {removeFromList} {onChange} />
+          {/each}
+        </div>
+      </div>
+      <div class="flex flex-col w-full mx-2">
+        <div class="mb-3">
+          <h1 class="text-2xl font-bold">Done List</h1>
+        </div>
+        <div class="overflow-y-scroll my-4">
+          {#each done as item, index}
+            <Item {item} {removeFromList} {onChange} />
+          {/each}
+        </div>
+      </div>
     </div>
   {/if}
 </div>

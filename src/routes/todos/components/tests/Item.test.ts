@@ -1,25 +1,24 @@
 import { render } from "@testing-library/svelte";
 import Item from "../Item.svelte";
 
-const mockItem = { todo: "Buy groceries", status: false };
-const mockIndex = 0;
+const mockItem = { todo: "Buy groceries", status: false, todoId: 0 };
 let mockRemoveFromList = () => {};
 
 it("should display the todo item correctly", () => {
   const { getByTestId } = render(Item, {
     props: {
       item: mockItem,
-      index: mockIndex,
       removeFromList: mockRemoveFromList,
+      onChange: () => {},
     },
   });
 
   const todoItem = getByTestId("todo-item-0");
-  const checkbox = getByTestId("checkbox-0");
-  const deleteButton = getByTestId("delete-button-0");
+  const checkbox = getByTestId("todo-checkbox-0");
+  const deleteButton = getByTestId("todo-delete-button-0");
 
   expect(todoItem).toHaveTextContent(mockItem.todo);
-  expect(todoItem).not.toHaveClass("line-through italic font-semibold");
+  expect(todoItem).not.toHaveClass("italic font-semibold");
   expect(checkbox).not.toBeChecked();
   expect(deleteButton).toBeInTheDocument();
 });
@@ -28,14 +27,14 @@ it("should check the checkbox when the item is completed", () => {
   const { getByTestId } = render(Item, {
     props: {
       item: { ...mockItem, status: true },
-      index: mockIndex,
       removeFromList: mockRemoveFromList,
+      onChange: () => {},
     },
   });
 
-  const todoItem = getByTestId("todo-item-0");
-  const checkbox = getByTestId("checkbox-0");
+  const todoItem = getByTestId("done-item-0");
+  const checkbox = getByTestId("done-checkbox-0");
 
-  expect(todoItem).toHaveClass("line-through italic font-semibold");
+  expect(todoItem).toHaveClass("italic font-semibold");
   expect(checkbox).toBeChecked();
 });

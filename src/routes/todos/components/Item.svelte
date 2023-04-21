@@ -1,7 +1,9 @@
 <script lang="ts">
-  export let item: { todo: string; status: boolean };
-  export let index: number;
+  export let item: { todo: string; status: boolean, todoId: number };
   export let removeFromList: (index: number) => void;
+  export let onChange: () => void;
+
+  $: status = item.status ? "done" : "todo"; 
 </script>
 
 <div
@@ -11,19 +13,19 @@
     bind:checked={item.status}
     type="checkbox"
     class="h-4 w-4"
-    data-testid="checkbox-{index}"
+    data-testid="{status}-checkbox-{item.todoId}"
+    on:change={onChange}
   />
   <span
-    class:line-through={item.status}
     class:italic={item.status}
     class:font-semibold={item.status}
-    data-testid="todo-item-{index}"
+    data-testid="{status}-item-{item.todoId}"
     class="text-md"
   >
     {item.todo}
   </span>
   <button
-    on:click={() => removeFromList(index)}
-    data-testid="delete-button-{index}">❌</button
+    on:click={() => removeFromList(item.todoId)}
+    data-testid="{status}-delete-button-{item.todoId}">❌</button
   >
 </div>
