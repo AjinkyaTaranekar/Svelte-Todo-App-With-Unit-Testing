@@ -77,7 +77,11 @@
     </button>
   </div>
   {#if errorMessage}
-    <div class="text-red-500 text-md">{errorMessage}</div>
+    <div class="text-red-500 text-md" data-testid="error-message">
+      {errorMessage}
+    </div>
+  {:else}
+    <div class="text-md">&nbsp;</div>
   {/if}
   {#if !tasksList.length}
     <div class="flex flex-col justify-around items-center m-8">

@@ -23,7 +23,7 @@ it("check if input, add and remove button are present", () => {
 });
 
 it("should add todo to the list when add button is clicked", async () => {
-  const { getByPlaceholderText, getByText, getAllByTestId } =
+  const { queryByTestId, getByPlaceholderText, getByText, getAllByTestId } =
     render(TaskReviewPage);
 
   const input = getByPlaceholderText("What needs to be done?");
@@ -35,6 +35,8 @@ it("should add todo to the list when add button is clicked", async () => {
   expect(getByText("Buy groceries")).toBeInTheDocument();
   const todoItems = getAllByTestId(/todo-item-.*/);
   expect(todoItems.length).toBe(2); // Original 1 todo + new item
+
+  expect(queryByTestId("error-message")).not.toBeInTheDocument();
 });
 
 it("should add todo to the list when enter key is pressed", async () => {
