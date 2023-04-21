@@ -23,6 +23,21 @@ it("should display the todo item correctly", () => {
   expect(deleteButton).toBeInTheDocument();
 });
 
+it("should display the delete button with svg in todo", () => {
+  const { getByTestId } = render(Item, {
+    props: {
+      item: mockItem,
+      removeFromList: mockRemoveFromList,
+      onChange: () => {},
+    },
+  });
+
+  const deleteButton = getByTestId("todo-delete-button-0");
+
+  expect(deleteButton).toBeInTheDocument();
+  expect(deleteButton).toContainElement(getByTestId("delete-svg"));
+});
+
 it("should check the checkbox when the item is completed", () => {
   const { getByTestId } = render(Item, {
     props: {
