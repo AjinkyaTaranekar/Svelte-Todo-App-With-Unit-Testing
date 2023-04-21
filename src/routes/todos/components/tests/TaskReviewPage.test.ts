@@ -23,7 +23,7 @@ it("check if input, add and remove button are present", () => {
 });
 
 it("should add todo to the list when add button is clicked", async () => {
-  const { getByPlaceholderText, getByText, getAllByTestId } =
+  const { queryByTestId, getByPlaceholderText, getByText, getAllByTestId } =
     render(TaskReviewPage);
 
   const input = getByPlaceholderText("What needs to be done?");
@@ -35,6 +35,8 @@ it("should add todo to the list when add button is clicked", async () => {
   expect(getByText("Buy groceries")).toBeInTheDocument();
   const todoItems = getAllByTestId(/todo-item-.*/);
   expect(todoItems.length).toBe(2); // Original 1 todo + new item
+
+  expect(queryByTestId("error-message")).not.toBeInTheDocument();
 });
 
 it("should add todo to the list when enter key is pressed", async () => {
@@ -85,7 +87,7 @@ it("should remove todo from the list when remove button is clicked", async () =>
   const removeButton = getByTestId("todo-delete-button-2");
 
   await fireEvent.click(removeButton); // Remove the first item
-  
+
   const todoItems = queryAllByTestId(/todo-item-.*/);
   expect(todoItems.length).toBe(0); // Original 1 - 1 removed
 });
@@ -126,10 +128,14 @@ it("should disable the remove button when there are no todos", async () => {
 });
 
 it("should show no todo text when there are no todos", async () => {
-  const { getByText } = render(TaskReviewPage);
+  const { getByText, getByTestId } = render(TaskReviewPage);
 
   const removeAllButton = getByText("Remove All");
   await fireEvent.click(removeAllButton);
 
   expect(getByText("No todos to show!! Add now 👆")).toBeInTheDocument();
+
+  const noTodoImage = getByTestId("no-todo-image");
+  expect(noTodoImage).toBeInTheDocument();
+  expect(noTodoImage).toHaveAttribute("src", "/assets/take_notes.svg");
 });
