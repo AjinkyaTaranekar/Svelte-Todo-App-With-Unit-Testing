@@ -10,6 +10,18 @@ const config = {
     include: ["src/**/*.test.{js,ts}"],
     setupFiles: "src/setupTests.ts",
   },
+  server: {
+    fs: {
+      allow: [
+        ".svelte-kit",
+        "node-modules",
+        "src",
+        "src/lib",
+        "src/routes",
+        "assets",
+      ],
+    },
+  },
 };
 
 export default config;

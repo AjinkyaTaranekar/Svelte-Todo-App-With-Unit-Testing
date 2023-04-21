@@ -80,8 +80,15 @@
     <div class="text-red-500 text-md">{errorMessage}</div>
   {/if}
   {#if !tasksList.length}
-    <div class="text-gray-500 text-md text-center m-8">
-      No todos to show!! Add now 👆
+    <div class="flex flex-col justify-around items-center m-8">
+      <h2 class="text-gray-500 text-md text-center p-4">
+        No todos to show!! Add now 👆
+      </h2>
+      <img
+        src="/assets/take_notes.svg"
+        alt="take-notes"
+        data-testid="no-todo-image"
+      />
     </div>
   {:else}
     <div class="flex flex-row mt-6 justify-between">
